@@ -18,7 +18,7 @@ import api from '~/services/api';
 
 import { Container, Time } from './styles';
 
-const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 
 export default function Dashboard() {
   const [schedule, setSchedule] = useState([]);
@@ -45,15 +45,13 @@ export default function Dashboard() {
         const compareDate = utcToZonedTime(checkDate, timezone);
 
         return {
-          time: `${hour}:00h`,
+          time: `${hour}h00`,
           past: isBefore(compareDate, new Date()),
           appointment: response.data.find(a =>
             isEqual(parseISO(a.date), compareDate)
           ),
         };
       });
-
-      console.tron.log(data);
 
       setSchedule(data);
     }
