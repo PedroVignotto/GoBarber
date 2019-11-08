@@ -46,14 +46,15 @@ export function* signUp({ payload }) {
       name,
       email,
       password,
-      provider: true,
     });
+
     // history.push('/');
   } catch (err) {
     Alert.alert(
       'Falha no cadastro',
       'Houve um erro no cadastro, verifique seus dados'
     );
+
     yield put(signFailure());
   }
 }
@@ -68,13 +69,8 @@ export function setToken({ payload }) {
   }
 }
 
-export function signOut() {
-  // history.push('/');
-}
-
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
-  takeLatest('@auth/SIGN_OUT', signOut),
 ]);

@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'gobarber',
       storage: AsyncStorage,
-      whiteList: ['auth', 'user'],
+      whitelist: ['auth', 'user'],
     },
     reducers
   );
