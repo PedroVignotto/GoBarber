@@ -95,20 +95,24 @@ class AppointmentController {
       date: hourStart,
     });
 
-    /**
-     * Notify appointment provider
-     */
     const user = await User.findByPk(req.userId);
+
     const formattedDate = format(
       hourStart,
       "'dia' dd 'de' MMMM', às' H:mm'h'",
       { locale: pt }
     );
 
-    await Notification.create({
+    const notification = await Notification.create({
       content: `Novo agendamento de ${user.name} para ${formattedDate}`,
       user: provider_id,
     });
+
+    const ownerSocket = req.connectedUsers[provider_id];
+
+    if (ownerSocket) {
+      req.io.to(ownerSocket).emit('notification', notification);
+    }
 
     return res.json(appointment);
   }
